@@ -1,3 +1,11 @@
+/* 
+Kelompok : 8
+1. Arief Darmawan Tantriady (13518015).
+2. Muh.Muslim Al Mujahid (13518054).
+3. Morgen Sudyanto (13518093).
+4. Moch. Nafkhan Alzamzami (13518132).
+*/
+
 :- use_module(library(random)).
 
 % 0 = north, 1 = east, 2 = south, 3 = west
