@@ -14,7 +14,7 @@ randomDir(D) :- random_between(0, 3, D).
 % ADT Tokemon
 % Nama, Tipe, HP, Damage Normal, Damage Skill, IsLegendary, LocX, LocY
 :- dynamic(tokemon/8).
-tokemon(buda, fire, 35, 10, 25, 0, -1, -1).
+tokemon(budi, fire, 35, 10, 25, 0, -1, -1).
 tokemon(rali, leaf, 100, 20, 75, 0, 3, 4).
 tokemon(carimender, fire, 123, 6, 52, 0, 5, 6).
 tokemon(harlele, water, 65, 1, 35, 0, 6, 7).
