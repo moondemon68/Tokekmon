@@ -36,7 +36,14 @@ quit :- write('Bye-bye!'),nl,halt.
 
 %healT :- asserta(player(X, Y, 1, TokemonList)),
 
-%status :- 
+status :- 
+	write('Your Tokemon:'),nl,
+	player(_,_,_,TokemonList),
+	printTokemon(TokemonList),!.
+
+printTokemon([]):-!.
+printTokemon([H|T]):-
+	write(H),nl,printTokemon(T),!.
 
 map :- printMap(1, 1), !.
 
