@@ -6,15 +6,13 @@ Kelompok : 8
 4. Moch. Nafkhan Alzamzami (13518132).
 */
 
-:- use_module(library(random)).
-
 % 0 = north, 1 = east, 2 = south, 3 = west
-randomDir(D) :- random_between(0, 3, D).
+randomDir(D) :- random(0, 4, D).
 
 % ADT Tokemon
 % Nama, Tipe, HP, Damage Normal, Damage Skill, IsLegendary, LocX, LocY
 :- dynamic(tokemon/8).
-tokemon(budi, fire, 35, 10, 25, 0, -1, -1).
+tokemon(buda, fire, 35, 10, 25, 0, -1, -1).
 tokemon(rali, leaf, 100, 20, 75, 0, 3, 4).
 tokemon(carimender, fire, 123, 6, 52, 0, 5, 6).
 tokemon(harlele, water, 65, 1, 35, 0, 6, 7).
@@ -26,7 +24,6 @@ tokemon(poontoon, leaf, 5300, 500, 1250, 1, 1, 9).
     
 % ADT Pemain
 % ListTokemon, LocX, LocY, SudahGym
-:- dynamic(pemain/4).
 pemain([buda], 0, 0, 0).
 
 % ADT Peta

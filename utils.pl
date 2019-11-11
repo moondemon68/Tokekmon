@@ -1,10 +1,11 @@
-% :- include('map.pl').
-% :- include('utils.pl').
-% :- include('player.pl').
-
 % Move with random direction (FIX)
+initRandom :-
+   real_time(TS),
+   set_seed(TS),
+   !.
+
 randomDirection(X, Y) :-
-    random_between(0, 3, Dir),
+    random(0, 4, Dir),
     (Dir == 0 -> 
         Y2 is Y + 1, mapItem(X, Y2, Item), Item \== fence, Y is Y2; 
     Dir == 1 -> 
@@ -16,8 +17,8 @@ randomDirection(X, Y) :-
 
 % Generate random position
 randomPosition(X, Y) :-
-    random_between(2, 11, TX),
-    random_between(2, 11, TY),
+    random(2, 12, TX),
+    random(2, 12, TY),
     mapItem(TX, TY, Item),
     Item \== fence,
     X is TX,
@@ -25,7 +26,8 @@ randomPosition(X, Y) :-
 
 % Generate random number (for chance percentage)
 chance(X) :-
-    random_between(0, 100, Rand),
+    random(0, 101, Rand),
+    write(Rand),
     Rand =< X.
 
 % Delete one item from list

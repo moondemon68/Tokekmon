@@ -9,8 +9,11 @@ start :-
 	nl,write('Legends:'),nl,
 	write('  X = Pagar'),nl,
 	write('  P = Player'),nl,
-	write('  G = Gym'),nl.
-	initPlayer,initMap,fail.
+	write('  G = Gym'),nl,
+	initRandom,
+	initMap,
+	initPlayer,
+	!.
 
 help :-
 	nl,write('List of commands:'),nl,
@@ -26,26 +29,30 @@ help :-
 
 quit :- write('Bye-bye!'),nl,halt.
 
-heal :- 
-	startDoneGym(DoneGym),
-	(DoneGym == 0 ->  write('Tengtengtengtengteng'), healT;
-	DoneGym == 1 -> write('You already visited Gym! Cannot heal! ULULULU')).
+%heal :- 
+	%startDoneGym(DoneGym),
+	%(DoneGym == 0 ->  write('Tengtengtengtengteng'), healT;
+	%DoneGym == 1 -> write('You already visited Gym! Cannot heal! ULULULU')).
 
 %healT :- asserta(player(X, Y, 1, TokemonList)),
 
-status :- 
+%status :- 
 
-map :- printMap (1, 1).
+map :- printMap(1, 1), !.
 
 w :-
     moveW,
-    msgW.
+    msgW,
+    !.
 s :-
     moveS,
-    msgS.
+    msgS,
+    !.
 a :-
     moveA,
-    msgA.
+    msgA,
+    !.
 d :-
     moveD,
-    msgD.
+    msgD,
+    !.
