@@ -10,6 +10,11 @@ initBattle(EnemyT,PlayerT) :-
     asserta(haveUsedSkill(0,enemy)),
     asserta(turn(1)).
 
+checkTokemon :-
+    player(X, Y, _, _),
+    position(Tokemon, X, Y),
+    findTokemon(Tokemon).
+
 % trying to escape from battle
 escape :-
     write('You escaped from battle!.'), nl, !.
@@ -83,7 +88,7 @@ loseBattle :-
         changeTokemon, % chose other tokemon
         nexTurn;
     N == 0 -> % no tokemon left
-        gameOver).
+        gameOver), !.
 
 % battle phase
 % battle plot turn -> checkStatus -> nextTurn(if stop condition unsatisfied)
@@ -96,7 +101,7 @@ nexTurn :-
     assertz(turn(NextTurn)),
 
     % back to battle
-    battle.
+    battle, !.
 
 checkStatus :-
     tokemonInBattle(PlayerT, player),
@@ -109,15 +114,27 @@ checkStatus :-
         loseBattle;
     Hp2 =< 0 ->
         winBattle; 
-    nexTurn).
+    nexTurn), !.
 
 battle :-
+    cls,
+    tokemonInBattle(PlayerT, player),
+    tokemonInBattle(EnemyT, enemy),
+    hp(PlayerT, Hp1), hp(EnemyT, Hp2),
+    
+    write('======================================='), nl,
+    write('(HP) '), write(' '),
+    write(PlayerT), write(' : '), write(Hp1),
+    write('   '),
+    write(EnemyT), write(' : '), write(Hp2), nl,
+    write('======================================='), nl,
+
     turn(Turn),
     (Turn == 0 ->
         playerTurn;
     Turn == 1 ->
         enemyTurn),
-    checkStatus.
+    checkStatus, !.
 
 % begin battle
 beginBattle(EnemyT) :-
@@ -134,10 +151,13 @@ beginBattle(EnemyT) :-
 
 % find tokemon
 findTokemon(EnemyT) :-
+    cls,
     write('Wild ' ), % Wild ____ Appear
     write(EnemyT),
     write(' appear!'),nl,
+    tokemonStatus(EnemyT),
     write('fight? (y/n) : '), 
     read(Command), nl, % Read command
+    cls,
     % choose to fight or escape
-    (Command == 'y' -> beginBattle(EnemyT); escape), !.
+    (Command == 'y' -> beginBattle(EnemyT); escape).

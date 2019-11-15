@@ -3,6 +3,8 @@
 % Nama, Tipe, HP, Damage Normal, Damage Skill, IsLegendary
 % :- dynamic(tokemon/6).
 :- dynamic(hp/2).
+:- dynamic(position/3).
+:- dynamic(allTokemon/1).
 
 tokemon(budi).
 tokemon(rali).
@@ -23,47 +25,128 @@ attribute(ibunyabudi, fire).
 attribute(engi, water).
 attribute(poontoon, leaf).
 normalDamage(budi,10).
+normalDamage(rali, 20).
+normalDamage(carimender, 6).
 normalDamage(harlele,1).
 normalDamage(camcam, 18).
-skillDamage(budi,25).
+normalDamage(abuy, 35).
+normalDamage(ibunyabudi, 81).
+normalDamage(engi, 100).
+normalDamage(poontoon, 500).
+skillDamage(budi, 25).
+skillDamage(rali, 50).
+skillDamage(carimender, 52).
 skillDamage(harlele,35).
-isLegendary(budi,0).
-isLegendary(harlele,0).
+skillDamage(camcam, 36).
+skillDamage(abuy, 80).
+skillDamage(ibunyabudi, 470).
+skillDamage(engi, 225).
+skillDamage(poontoon, 1250).
+isLegendary(budi, 0).
+isLegendary(harlele, 0).
+isLegendary(carimender, 0).
+isLegendary(harlele, 0).
+isLegendary(camcam, 0).
+isLegendary(abuy, 0).
+isLegendary(ibunyabudi, 1).
+isLegendary(engi, 1).
+isLegendary(poontoon, 1).
+
+randomPositionTokemon(X, Y) :-
+    randomPosition(X, Y),
+    \+(position(_, X, Y)).
+
+initTokemonPosition :-
+    tokemon(Tokemon),
+    Tokemon \== budi,
+    randomPositionTokemon(X, Y),
+    asserta(position(Tokemon, X, Y)).
 
 initTokemon :-
+    initTokemonPosition,
     asserta(hp(budi,10)),
-    asserta(hp(harlele,10)).
-    
-    % asserta(tokemon(name(budi), attribute(fire), hp(1000), normal_damage(10), skill_damage(25), is_legendary(0))),
-    % asserta(tokemon(name(rali), attribute(leaf), hp(100), normal_damage(20), skill_damage(5), is_legendary(0))),
-    % asserta(tokemon(name(carimender), attribute(fire), hp(123), normal_damage(6), skill_damage(52), is_legendary(0))),
-    % asserta(tokemon(name(harlele), attribute(water), hp(1000), normal_damage(1), skill_damage(35), is_legendary(0))),
-    % asserta(tokemon(name(camcam), attribute(leaf), hp(135), normal_damage(18), skill_damage(36), is_legendary(0))),
-    % asserta(tokemon(name(abuy), attribute(water), hp(180), normal_damage(35), skill_damage(80), is_legendary(0))),
-    % asserta(tokemon(name(ibunyabudi), attribute(fire), hp(1351), normal_damage(81), skill_damage(470), is_legendary(1))),
-    % asserta(tokemon(name(engi), attribute(water), hp(3500), normal_damage(100), skill_damage(225), is_legendary(1))),
-    % asserta(tokemon(name(poontoon), attribute(leaf), hp(5300), normal_damage(500), skill_damage(1250), is_legendary(1))).
-
-% Selektor
-% getAtt(Name, Att) :-
-%     tokemon(name(Name), attribute(Att), _, _, _ , _),!.
-
-% getHp(Name, Hp) :-
-%     tokemon(name(Name), _, hp(Hp), _, _, _),!.
-
-% getNormalDamage(Name, Dmg) :-
-%     tokemon(name(Name), _, _, normal_damage(Dmg), _, _),!.
-
-% getSkillDamage(Name, Dmg) :-
-%     tokemon(name(Name), _, _, _, skill_damage(Dmg), _),!.
-
-% getIsLegendry(Name, IsTrue) :-
-%     tokemon(name(Name), _, _, _, _, is_legendary(IsTrue)),!.
+    asserta(hp(rali, 100)),
+    asserta(hp(carimender, 123)),
+    asserta(hp(harlele,10)),
+    asserta(hp(camcam, 135)),
+    asserta(hp(abuy, 180)),
+    asserta(hp(ibunyabudi, 1351)),
+    asserta(hp(engi, 3500)),
+    asserta(hp(poontoon, 5300)).
 
 % primitif
 setHp(Name, NewHp) :-
     retract(hp(Name, _)) ->
-    assertz(hp(Name ,NewHp)),!.
-    % retract(tokemon(name(Name), _, _, _, _, _)),
-    % assertz(tokemon(name(Name), _, hp(NewHp), _, _, _)).
-    
+    assertz(hp(Name, NewHp)), !.
+
+tokemonStatus(Tokemon) :-
+    attribute(Tokemon, Att),
+    hp(Tokemon, Hp),
+    normalDamage(Tokemon, NormalDmg),
+    skillDamage(Tokemon, SkillDmg),
+    isLegendary(Tokemon, IsLegendary),
+    write('======================================='), nl,
+    write(' Name\t\t: '), write(Tokemon), nl,
+    write(' Attribut\t: '), write(Att), nl,
+    write(' HP\t\t: '), write(Hp), nl, 
+    write(' Normal Damage\t: '), write(NormalDmg), nl, 
+    write(' Skill Damage\t: '), write(SkillDmg), nl,
+    write(' Legendary\t: '), (IsLegendary == 1 -> write('yes'); write('no')), nl,
+    write('======================================='), nl,
+    !.
+
+tokemonPost :-
+    tokemon(T),
+    position(T, X, Y),
+    write(T), write(' '), write(X), write(' '), write(Y), nl.
+
+moveTokemon :-
+    tokemon(Tokemon),
+    random(0, 5, Rand),
+    (Rand == 1 ->
+        tmoveW(Tokemon);
+    Rand == 2 ->
+        tmoveS(Tokemon);
+    Rand == 3 ->
+        tmoveA(Tokemon);
+    Rand == 4 ->
+        tmoveD(Tokemon)).
+
+tmoveW(Tokemon) :-
+    position(Tokemon, X, CurY),
+    CurY > 2,
+    Y is CurY - 1,
+    mapItem(X, Y, Item),!,
+    Item \== fence,
+    retract(position(X, CurY)),
+    asserta(position(X, Y)).
+
+tmoveS(Tokemon) :-
+    position(Tokemon, X, CurY),
+    CurY < 11,
+    Y is CurY - 1,
+    mapItem(X, Y, Item),!,
+    Item \== fence,
+    \+position(_, X, Y),
+    retract(position(X, CurY)),
+    asserta(position(X, Y)).
+
+tmoveA(Tokemon) :-
+    position(Tokemon, CurX, Y),
+    CurX > 2,
+    X is CurX - 1,
+    mapItem(X, Y, Item),!,
+    Item \== fence,
+    \+position(_, X, Y),
+    retract(position(CurX, Y)),
+    asserta(position(X, Y)).
+
+tmoveD(Tokemon) :-
+    position(Tokemon, CurX, Y),
+    CurX < 11,
+    X is CurX + 1,
+    mapItem(X, Y, Item),!,
+    Item \== fence,
+    \+position(_, X, Y),
+    retract(position(CurX, Y)),
+    asserta(position(X, Y)).

@@ -3,7 +3,7 @@
 
 % Starting values
 startDoneGym(0).
-startTokemon([budi, camcam]).
+startTokemon([budi]).
 
 % Initialization
 initPlayer :- 
