@@ -36,3 +36,28 @@ deleteList(I, [I|T], T) :- !.
 deleteList(I, [H|T], [H|R]) :- 
     deleteList(I, T, R).
 
+% Print list element following by number
+% <number>. <List element>
+% ...................
+% ...................
+printList([],_).
+printList(List, N) :-
+    List = [H|T],
+    write(N),
+    write('. '),
+    write(H),nl,
+    N2 is N+1,
+    printList(T,N2). 
+
+% Count list element
+countList([], 0).
+countList([_|T], N) :- 
+    countList(T, N1),
+    N is N1+1.
+
+% get element list by index
+elByIndex([El|_], 1, El).
+elByIndex(List, Idx, El) :-
+    List = [_|T],
+    Idx2 is Idx-1,
+    elByIndex(T, Idx2, El).

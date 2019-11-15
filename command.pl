@@ -13,6 +13,7 @@ start :-
 	initRandom,
 	initMap,
 	initPlayer,
+	initTokemon,
 	!.
 
 help :-
