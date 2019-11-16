@@ -110,7 +110,7 @@ winBattle :-
     
     tokemonInBattle(EnemyT, enemy),
     delTokemon(EnemyT),
-    write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "release" !'), nl, 
+    write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "eggxecute" !'), nl, 
     divider, !.
 
 
@@ -123,7 +123,9 @@ capture :-
         setGame(1),
         tokemonInBattle(Tokemon, enemy),
         addTokemon(Tokemon),
-        write('You captured '), write(Tokemon), write('!'), nl
+        write('You captured '), write(Tokemon), write('!'), nl,
+        starthp(Tokemon, StartHP),
+        setHp(Tokemon, StartHP)
     ), !.
 
 release :-

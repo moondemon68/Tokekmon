@@ -63,8 +63,8 @@ map :-
 w :-
 	game(1),
     moveW,
-	msgW,
 	map,
+	msgW,
 	checkTokemon,
     !.
 % w :-
@@ -74,8 +74,8 @@ w :-
 s :-
 	game(1),
     moveS,
-	msgS,
 	map,
+	msgS,
 	moveTokemon,
 	checkTokemon,
     !.
@@ -87,8 +87,8 @@ s :-
 a :-
 	game(1),
     moveA,
-	msgA,
 	map,
+	msgA,
 	moveTokemon,
 	checkTokemon,
     !.
@@ -99,8 +99,8 @@ a :-
 d :-
 	game(1),
     moveD,
-	msgD,
 	map,
+	msgD,
 	moveTokemon,
 	checkTokemon,
     !.

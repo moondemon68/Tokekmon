@@ -5,7 +5,7 @@
 
 % Map printing
 % Valid locations for items: 2 <= X, Y <= 11.
-printMap(13, 12) :- !.
+printMap(13, 12) :- newline, !.
 printMap(13, Y) :-
     Y2 is Y + 1,
     newline,

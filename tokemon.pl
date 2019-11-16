@@ -53,6 +53,15 @@ isLegendary(abuy, 0).
 isLegendary(ibunyabudi, 1).
 isLegendary(engi, 1).
 isLegendary(poontoon, 1).
+starthp(budi,1200).
+starthp(rali, 100).
+starthp(carimender, 123).
+starthp(harlele,10).
+starthp(camcam, 135).
+starthp(abuy, 180).
+starthp(ibunyabudi, 1351).
+starthp(engi, 3500).
+starthp(poontoon, 5300).
 
 randomPositionTokemon(X, Y) :-
     randomPosition(X, Y),

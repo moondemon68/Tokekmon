@@ -29,7 +29,6 @@ drop(Tokemon) :- delTokemon(Tokemon), !.
 % Movement (wasd)
 moveW :-
     player(X, CurY, DoneGym, TokemonList),
-    CurY > 2,
     Y is CurY - 1,
     mapItem(X, Y, Item),!,
     Item \== fence,
@@ -38,7 +37,6 @@ moveW :-
 
 moveS :-
     player(X, CurY, DoneGym, TokemonList),
-    CurY < 11,
     Y is CurY + 1,
     mapItem(X, Y, Item),!,
     Item \== fence,
@@ -47,7 +45,6 @@ moveS :-
 
 moveA :-
     player(CurX, Y, DoneGym, TokemonList),
-    CurX > 2,
     X is CurX - 1,
     mapItem(X, Y, Item),!,
     Item \== fence,
@@ -56,7 +53,6 @@ moveA :-
 
 moveD :-
     player(CurX, Y, DoneGym, TokemonList),
-    CurX < 11,
     X is CurX + 1,
     mapItem(X, Y, Item),!,
     Item \== fence,
