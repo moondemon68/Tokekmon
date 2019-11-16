@@ -9,6 +9,14 @@ initBattle :-
     asserta(tokemon(none, enemy)),
     asserta(haveUsedSkill(0, player)),
     asserta(haveUsedSkill(0, enemy)).
+initBattle :-
+    retract(turn(_)),
+    assertz(turn(0)),
+    retract(haveUsedSkill(_, player)),
+    assertz(haveUsedSkill(0, player)),
+    retract(haveUsedSkill(_, enemy)),
+    assertz(haveUsedSkill(0, enemy)), !.
+
 checkTokemon :-
     player(X, Y, _, _),
     position(Tokemon, X, Y),
@@ -26,10 +34,10 @@ escape :-
 
 % chose tokemon
 changeTokemon :-
+    resetSkill,
     player(_, _, _, TokemonList),
     write('Chose another tokemon!'), nl,
     printList(TokemonList), !.
-    
 
 % Attack
 attack :-
@@ -75,6 +83,10 @@ skill :-
     game(_),
     write('This command can only be used in battle'), nl, !.
 
+resetSkill :-
+    retract(haveUsedSkill(_, player)),
+    assertz(haveUsedSkill(0, player)), !.
+
 enemyAttack :-
     tokemonInBattle(Victim, player),
     tokemonInBattle(Attacker, enemy),
@@ -109,7 +121,7 @@ winBattle :-
     write('You won the battle'), nl,
     
     tokemonInBattle(EnemyT, enemy),
-    delTokemon(EnemyT),
+    delTokemon2(EnemyT),
     write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "release" !'), nl, 
     divider, !.
 
@@ -198,6 +210,7 @@ fight :-
     divider,
     write('[Available tokemon] : '), 
     player(_, _, _, TokemonList),
+    initBattle,
     write(TokemonList), nl,
     divider, !.
 

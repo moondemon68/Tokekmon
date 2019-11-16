@@ -24,6 +24,11 @@ delTokemon(Tokemon) :-
     deleteList(Tokemon, TokemonList, NewTokemonList),
     asserta(player(X, Y, DoneGym, NewTokemonList)).
 
+delTokemon2(Tokemon) :-
+    retract(allTokemon(TokemonList)),
+    deleteList(Tokemon, TokemonList, NewTokemonList),
+    asserta(allTokemon(NewTokemonList)).
+
 drop(Tokemon) :- delTokemon(Tokemon), !.
 
 % Movement (wasd)
