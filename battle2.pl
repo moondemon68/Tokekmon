@@ -24,6 +24,7 @@ checkTokemon :-
 
 % trying to escape from battle
 escape :-
+    game(2),
     random(0, 101, Rand),
     (Rand > 70 ->
         cls,
@@ -202,6 +203,7 @@ findTokemon(EnemyT) :-
     divider, !.
     
 fight :-
+    game(2),
     setGame(3),
     cls,
     nl, write('C\'mon, choose your partner!'), nl, 
