@@ -50,11 +50,11 @@ status :-
 	cls,
 	write('Your Tokemon:'), nl,
 	player(_, _, _, TokemonList),
-	printTokemon(TokemonList), !.
+    printTokemon(TokemonList).
 
 printTokemon([]):-!.
 printTokemon([H|T]):-
-	write(H),nl,printTokemon(T), !.
+	tokemonStatus(H),nl,printTokemon(T).
 
 map :- 
 	cls,

@@ -6,9 +6,7 @@
 :- include('messages.pl').
 :- include('map.pl').
 :- include('battle2.pl').
-% :- include('battle.pl').
 :- include('tokemon.pl').
-:- include('test.pl').
 
 setGame(Game) :-
     retract((game(_))),
