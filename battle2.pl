@@ -158,8 +158,9 @@ playerTurn :-
     !.
 
 gameOver :-
-    setGame(0),
-    write('Game Over'), nl, !.
+    % setGame(0),
+    write('Game Over'), nl, 
+    halt, !.
 
 winBattle :-
     setGame(5),
@@ -183,11 +184,12 @@ capture :-
         starthp(Tokemon, StartHP),
         setHp(Tokemon, StartHP)
     ), 
-    !.
+    gameFinish, !.
 
 eggxecute :-
     setGame(1),
-    map, !.
+    map, 
+    gameFinish, !.
 
 loseBattle :-
     tokemonInBattle(PlayerT, player),

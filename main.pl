@@ -12,4 +12,17 @@
 setGame(Game) :-
     retract((game(_))),
     assertz(game(Game)), !.
+
+gameFinish :- 
+    allTokemon(X),
+    noLegendary(X),
+    write('COngratulations! YOu win this game!\n'), 
+    halt,!.
+
+noLegendary([]).
+noLegendary(List) :-
+    List = [Tokemon|T],
+    isLegendary(Tokemon, 0),
+    noLegendary(T), !.
+
     
