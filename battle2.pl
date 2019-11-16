@@ -91,6 +91,10 @@ resetSkill :-
 enemyAttack :-
     tokemonInBattle(Victim, player),
     tokemonInBattle(Attacker, enemy),
+    haveUsedSkill(Have, enemy),
+    (Have == 0 ->
+        skillDamage(Attacker, Dmg), retract(haveUsedSkill(_, enemy)), assertz(haveUsedSkill(1, enemy));
+    normalDamage(Attacker, Dmg)),
     normalDamage(Attacker, Dmg),
     hp(Victim, Hp),
     write(Victim), write(' took '), write(Dmg), write(' damage'), nl,
