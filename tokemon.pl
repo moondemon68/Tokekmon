@@ -108,7 +108,7 @@ tmove(Tokemon) :-
     Rand == 2 -> tmoveS(Tokemon);
     Rand == 3 -> tmoveA(Tokemon);
     Rand == 4 -> tmoveD(Tokemon)).
-tmove(Tokemon) :- tmove(Tokemon). % Disini masih ada bug
+tmove(_).
 
 tmoveW(Tokemon) :-
     position(Tokemon, X, CurY),

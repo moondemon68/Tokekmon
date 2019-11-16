@@ -107,8 +107,9 @@ gameOver :-
 winBattle :-
     setGame(5),
     write('You won the battle'), nl,
-
+    
     tokemonInBattle(EnemyT, enemy),
+    delTokemon(EnemyT),
     write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "release" !'), nl, 
     divider, !.
 
@@ -121,6 +122,7 @@ capture :-
         write('Your inventory is full, "drop" some before you catch more tokemon'), nl;
         setGame(1),
         tokemonInBattle(Tokemon, enemy),
+        addTokemon(Tokemon),
         write('You captured '), write(Tokemon), write('!'), nl
     ), !.
 
