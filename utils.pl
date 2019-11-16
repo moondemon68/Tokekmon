@@ -59,10 +59,8 @@ elByIndex(List, Idx, El) :-
     Idx2 is Idx-1,
     elByIndex(T, Idx2, El).
 
-isMember([E|_],E).
-isMember(List, E) :-
-    List = [_|T],
-    isMember(T, E).
+isMember(Element, [Element|_]):-!.
+isMember(Element, [_|Tail]):-isMember(Element,Tail).
 
 % Clear screen
 cls :- shell(clear).
