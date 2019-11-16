@@ -50,8 +50,8 @@ help :-
 	write('  w. a. s. d.\t\t-- Move (Like In Point Blank)'), nl,
 	write('  heal.\t\t\t-- Heal Tokemon if you are in gym center'), nl,
 	write('  status.\t\t-- Status'), nl,
-	write('  save(Filename).\t-- Save game'), nl,
-	write('  load(Filename).\t-- Load game'), nl. 
+	write('  saveGame(Filename).\t-- Save game'), nl,
+	write('  loadGame(Filename).\t-- Load game'), nl. 
 
 quit :- 
 	cls,
