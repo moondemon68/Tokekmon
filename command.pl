@@ -51,7 +51,8 @@ help :-
 	write('  heal.\t\t\t-- Heal Tokemon if you are in gym center'), nl,
 	write('  status.\t\t-- Status'), nl,
 	write('  saveGame(Filename).\t-- Save game'), nl,
-	write('  loadGame(Filename).\t-- Load game'), nl. 
+	write('  loadGame(Filename).\t-- Load game'), nl,
+	write('  drop(Tokemon).\t\t\t-- Dropping tokemon from inventory'),nl.
 
 quit :- 
 	cls,
@@ -136,3 +137,11 @@ d :-
 	checkTokemon,
 	isGym,
     !.
+
+drop(Tokemon) :- delTokemon(Tokemon), isGameover,!.
+
+isGameover :-
+	player(_,_,_,L),
+	countList(L, M),
+	(M == 0 -> gameOver),
+	!.
