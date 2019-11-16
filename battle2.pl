@@ -64,12 +64,12 @@ attack :-
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    ((X == fire) -> (Y == water,Y == daemon -> EDmg is floor(0.5*Dmg); Y == leaf,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
-    (X == water) -> (Y == fire, Y == angmud-> EDmg is floor(1.5*Dmg); Y == leaf,Y == daemon -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
-    (X == leaf) -> (Y == fire,Y == daemon -> EDmg is floor(0.5*Dmg); Y == water,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    ((X == fire) -> ((Y == water; Y == daemon) -> EDmg is floor(0.5*Dmg); (Y == leaf; Y == angmud) -> EDmg is floor(1.5*Dmg); EDmg is Dmg);
+    (X == water) -> ((Y == fire; Y == angmud)-> EDmg is floor(1.5*Dmg); (Y == leaf; Y == daemon) -> EDmg is floor(0.5*Dmg); EDmg is Dmg);
+    (X == leaf) -> ((Y == fire; Y == daemon) -> EDmg is floor(0.5*Dmg); (Y == water; Y == angmud) -> EDmg is floor(1.5*Dmg); EDmg is Dmg);
     (X == daemon) -> (Y == daemon -> EDmg is Dmg; EDmg is floor(1.5*Dmg));
     (X == angmud) -> (Y == angmud -> EDmg is Dmg; EDmg is floor(0.5*Dmg)),
-    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg),EDmg is Dmg)), 
+    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg); EDmg is Dmg)), 
     write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider,
     NewHp is Hp-EDmg,
@@ -92,12 +92,12 @@ skill :-
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    ((X == fire) -> (Y == water,Y == daemon -> EDmg is floor(0.5*Dmg); Y == leaf,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
-    (X == water) -> (Y == fire, Y == angmud-> EDmg is floor(1.5*Dmg); Y == leaf,Y == daemon -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
-    (X == leaf) -> (Y == fire,Y == daemon -> EDmg is floor(0.5*Dmg); Y == water,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    ((X == fire) -> ((Y == water; Y == daemon) -> EDmg is floor(0.5*Dmg); (Y == leaf; Y == angmud) -> EDmg is floor(1.5*Dmg); EDmg is Dmg);
+    (X == water) -> ((Y == fire; Y == angmud)-> EDmg is floor(1.5*Dmg); (Y == leaf; Y == daemon) -> EDmg is floor(0.5*Dmg); EDmg is Dmg);
+    (X == leaf) -> ((Y == fire; Y == daemon) -> EDmg is floor(0.5*Dmg); (Y == water; Y == angmud) -> EDmg is floor(1.5*Dmg); EDmg is Dmg);
     (X == daemon) -> (Y == daemon -> EDmg is Dmg; EDmg is floor(1.5*Dmg));
     (X == angmud) -> (Y == angmud -> EDmg is Dmg; EDmg is floor(0.5*Dmg)),
-    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg),EDmg is Dmg)), 
+    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg); EDmg is Dmg)), 
     write(Victim), write(' took '), write(EDmg), write(' damage'), nl, 
     divider,
     NewHp is Hp-EDmg,
@@ -126,12 +126,12 @@ enemyAttack :-
     (Have == 0 ->
     skillDamage(Attacker, Dmg), retract(haveUsedSkill(_, enemy)), assertz(haveUsedSkill(1, enemy));
     normalDamage(Attacker, Dmg)),
-    ((X == fire) -> (Y == water,Y == daemon -> EDmg is floor(0.5*Dmg); Y == leaf,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
-    (X == water) -> (Y == fire, Y == angmud-> EDmg is floor(1.5*Dmg); Y == leaf,Y == daemon -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
-    (X == leaf) -> (Y == fire,Y == daemon -> EDmg is floor(0.5*Dmg); Y == water,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    ((X == fire) -> ((Y == water; Y == daemon) -> EDmg is floor(0.5*Dmg); (Y == leaf; Y == angmud) -> EDmg is floor(1.5*Dmg); EDmg is Dmg);
+    (X == water) -> ((Y == fire; Y == angmud)-> EDmg is floor(1.5*Dmg); (Y == leaf; Y == daemon) -> EDmg is floor(0.5*Dmg); EDmg is Dmg);
+    (X == leaf) -> ((Y == fire; Y == daemon) -> EDmg is floor(0.5*Dmg); (Y == water; Y == angmud) -> EDmg is floor(1.5*Dmg); EDmg is Dmg);
     (X == daemon) -> (Y == daemon -> EDmg is Dmg; EDmg is floor(1.5*Dmg));
     (X == angmud) -> (Y == angmud -> EDmg is Dmg; EDmg is floor(0.5*Dmg)),
-    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg),EDmg is Dmg)), 
+    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg); EDmg is Dmg)), 
     hp(Victim, Hp),
     write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider, nl,
