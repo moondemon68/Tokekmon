@@ -112,11 +112,11 @@ tokemonPost :-
 moveTokemon :- forall(tokemon(Tokemon), tmove(Tokemon)).
 
 tmove(Tokemon) :-
-    random(1, 5, Rand),
-    (Rand == 1 -> tmoveW(Tokemon);
-    Rand == 2 -> tmoveS(Tokemon);
-    Rand == 3 -> tmoveA(Tokemon);
-    Rand == 4 -> tmoveD(Tokemon)).
+    random(1, 101, Rand),
+    (Rand >= 51 -> tmoveD(Tokemon);
+    Rand =< 50 -> tmoveA(Tokemon);
+    Rand >= 51 -> tmoveS(Tokemon);
+    Rand =< 50 -> tmoveW(Tokemon)).
 tmove(_).
 
 tmoveW(Tokemon) :-

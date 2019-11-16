@@ -110,12 +110,8 @@ w :-
     !.
 w :-
 	game(1),
-	moveTokemon,
 	moveWf,
 	checkTokemon, !.
-% w :-
-% 	game(_),
-% 	write('This command can only be used when exploring!'), nl, !.
 
 s :-
 	game(1),
@@ -123,12 +119,10 @@ s :-
 	map,
 	msgS,
 	isGym,
-	moveTokemon,
 	checkTokemon,
     !.
 s :-
 	game(1),
-	moveTokemon,
 	movesf,
 	checkTokemon, !.
 
@@ -138,23 +132,17 @@ movesf :-
 	mapItem(X, Y, fence),!,
 	write('There\'s a fence in front of you!.').
 
-% s :-
-% 	game(_),
-	% write('This command can only be used when exploring!'), nl, !.
-
 a :-
 	game(1),
 	moveA,
 	map,
 	msgA,
 	isGym,
-	moveTokemon,
 	checkTokemon,
     !.
 
 a :-
 	game(1),
-	moveTokemon,
 	moveaf,
 	checkTokemon, !.
 
@@ -165,9 +153,6 @@ moveaf :-
 	mapItem(X, Y, fence),!,
 	write('There\'s a fence in front of you!.').
 
-% a :-
-% 	game(_),
-% 	write('This command can only be used when exploring!'), nl, !.
 
 d :-
 	game(1),
@@ -175,13 +160,11 @@ d :-
 	map,
 	msgD,
 	isGym,
-	moveTokemon,
 	checkTokemon,
     !.
 
 d :-
 	game(1),
-	moveTokemon,
 	movedf,
 	checkTokemon, !.
 
@@ -191,7 +174,3 @@ movedf :-
     X is CurX + 1,
 	mapItem(X, Y, fence),!,
 	write('There\'s a fence in front of you!.').
-
-% d :-
-% 	game(_),
-% 	write('This command can only be used when exploring!'), nl, !.

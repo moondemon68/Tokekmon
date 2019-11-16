@@ -13,4 +13,3 @@ setGame(Game) :-
     retract((game(_))),
     assertz(game(Game)), !.
     
-    
