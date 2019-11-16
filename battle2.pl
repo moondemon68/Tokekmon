@@ -51,10 +51,9 @@ attack :-
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    EDmg is Dmg,
-    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg));
-    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor (0.5*Dmg));
-    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg))),
+    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
+    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg);EDmg is Dmg)),    
     write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider,
     NewHp is Hp-EDmg,
@@ -75,10 +74,9 @@ skill :-
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    EDmg is Dmg,
-    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg));
-    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor (0.5*Dmg));
-    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg))),
+    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
+    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg);EDmg is Dmg)),
     write(Victim), write(' took '), write(EDmg), write(' damage'), nl, 
     divider,
     NewHp is Hp-EDmg,
@@ -105,11 +103,13 @@ enemyAttack :-
     tokemonInBattle(Attacker, enemy),
     attribute(Attacker,X),
     attribute(Victim,Y),
-    normalDamage(Attacker, Dmg),
-    EDmg is Dmg,
-    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg));
-    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor (0.5*Dmg));
-    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg))),
+    haveUsedSkill(Have, enemy),
+    (Have == 0 ->
+    skillDamage(Attacker, Dmg), retract(haveUsedSkill(_, enemy)), assertz(haveUsedSkill(1, enemy));
+    normalDamage(Attacker, Dmg)),
+    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
+    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg);EDmg is Dmg)),
     hp(Victim, Hp),
     write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider, nl,
@@ -147,8 +147,9 @@ capture :-
     game(5),
     player(_, _, _, TokemonList),
     countList(TokemonList, N),
-    (N == 6 ->
-        write('Your inventory is full, "drop" some before you catch more tokemon'), nl;
+    (
+        N == 6 -> write('Your inventory is full, "drop" some before you catch more tokemon'), nl
+        ;
         setGame(1),
         tokemonInBattle(Tokemon, enemy),
         addTokemon(Tokemon),

@@ -110,7 +110,9 @@ w :-
     !.
 w :-
 	game(1),
-	moveWf.
+	moveTokemon,
+	moveWf,
+	checkTokemon, !.
 % w :-
 % 	game(_),
 % 	write('This command can only be used when exploring!'), nl, !.
@@ -126,7 +128,9 @@ s :-
     !.
 s :-
 	game(1),
-	movesf.
+	moveTokemon,
+	movesf,
+	checkTokemon, !.
 
 movesf :-
 	player(X, CurY, _, _),
@@ -150,7 +154,9 @@ a :-
 
 a :-
 	game(1),
-	moveaf.
+	moveTokemon,
+	moveaf,
+	checkTokemon, !.
 
 
 moveaf :-
@@ -175,7 +181,9 @@ d :-
 
 d :-
 	game(1),
-	movedf.
+	moveTokemon,
+	movedf,
+	checkTokemon, !.
 
 
 movedf :-
