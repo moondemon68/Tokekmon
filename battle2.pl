@@ -7,6 +7,10 @@ initBattle :-
     asserta(turn(0)), 
     asserta(haveUsedSkill(0, player)),
     asserta(haveUsedSkill(0, enemy)), !.
+initBattle2 :-
+    retract(turn(_)), assertz(turn(0)),
+    retract(haveUsedSkill(_, player)), assertz(haveUsedSkill(0, player)),
+    retract(haveUsedSkill(0, enemy)), assertz(haveUsedSkill(0, enemy)), !.
 
 countTokemon(IsLegend, Result) :-
     allTokemon(List), countTokemon(IsLegend, Result, List).
@@ -178,7 +182,8 @@ capture :-
         write('You captured '), write(Tokemon), write('!'), nl,
         starthp(Tokemon, StartHP),
         setHp(Tokemon, StartHP)
-    ), !.
+    ), 
+    !.
 
 eggxecute :-
     setGame(1),
@@ -246,6 +251,7 @@ findTokemon(EnemyT) :-
 fight :-
     game(2),
     setGame(3),
+    initBattle2,
     cls,
     nl, write('C\'mon, choose your partner!'), nl, 
     divider,

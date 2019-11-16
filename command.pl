@@ -100,39 +100,67 @@ isGym :-
 	write('You are in gym now!! If you wanna heal type \'heal\'\n'),
 	write('Ignore me if you dont want to')).
 
+isFenceW :-
+	player(X, Y, _, _),
+	Y2 is Y-1,
+	mapItem(X, Y2, Item),
+	Item == fence,
+	write('You bump into a fence!'), nl, !.
+isFenceS :-
+	player(X, Y, _, _),
+	Y2 is Y+1,
+	mapItem(X, Y2, Item),
+	Item == fence,
+	write('You bump into a fence!'), nl, !.
+isFenceA :-
+	player(X, Y, _, _),
+	X2 is X-1,
+	mapItem(X2, Y, Item),
+	Item == fence,
+	write('You bump into a fence!'), nl, !.
+isFenceD :-
+	player(X, Y, _, _),
+	X2 is X+1,
+	mapItem(X2, Y, Item),
+	Item == fence,
+	write('There are fences in front of you!'), nl, !.
+
 w :-
 	game(1),
 	moveW,
 	map,
 	msgW,
 	checkTokemon,
-	isGym,
-	write('Good ....'), nl,
     !.
+w :- isGym, !.
+w :- isFenceW, !.
 
 s :-
 	game(1),
 	moveS,
 	map,
-	checkTokemon,
 	msgS,
-	isGym,
+	checkTokemon,
     !.
+s :- isGym, !.
+s :- isFenceS, !.
 
 a :-
 	game(1),
 	moveA,
 	map,
-	checkTokemon,
 	msgA,
-	isGym,
+	checkTokemon,
     !.
+a :- isGym, !.
+a :- isFenceA, !.
 
 d :-
 	game(1),
 	moveD,
-	map,	
+	map,
+	msgD,	
 	checkTokemon,
-	msgD,
-	isGym,
     !.
+d :- isGym, !.
+d :- isFenceD, !.
