@@ -17,17 +17,19 @@ initPlayer :-
 addTokemon(Tokemon) :-
     retract(player(X, Y, DoneGym, TokemonList)),
     append([Tokemon], TokemonList, NewTokemonList),
-    asserta(player(X, Y, DoneGym, NewTokemonList)).
+    assertz(player(X, Y, DoneGym, NewTokemonList)).
 
 delTokemon(Tokemon) :-
     retract(player(X, Y, DoneGym, TokemonList)),
     deleteList(Tokemon, TokemonList, NewTokemonList),
-    asserta(player(X, Y, DoneGym, NewTokemonList)).
+    assertz(player(X, Y, DoneGym, NewTokemonList)).
 
 delTokemon2(Tokemon) :-
     retract(allTokemon(TokemonList)),
     deleteList(Tokemon, TokemonList, NewTokemonList),
-    asserta(allTokemon(NewTokemonList)).
+    assertz(allTokemon(NewTokemonList)),
+    retract(position(Tokemon, _, _)),
+    assertz(position(Tokemon, -1, -1)), !.
 
 drop(Tokemon) :- delTokemon(Tokemon), !.
 
@@ -63,3 +65,5 @@ moveD :-
     Item \== fence,
     retract(player(CurX, Y, DoneGym, TokemonList)),
     asserta(player(X, Y, DoneGym, TokemonList)), !.
+
+

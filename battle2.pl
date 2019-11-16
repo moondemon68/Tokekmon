@@ -122,7 +122,7 @@ winBattle :-
     write('You won the battle'), nl,
     
     tokemonInBattle(EnemyT, enemy),
-    delTokemon(EnemyT),
+    delTokemon2(EnemyT),
     write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "eggxecute" !'), nl. 
 
 capture :-
@@ -193,7 +193,7 @@ findTokemon(EnemyT) :-
     isLegendary(EnemyT, Is),
     (Is == 1 -> chance(30);chance(100)),
     allTokemon(TokemonList),
-    isMember(TokemonList, EnemyT),
+    isMember(EnemyT, TokemonList),
     cls,
     write('Wild ' ), write(EnemyT), write(' appear!'), nl,
     tokemonStatus(EnemyT),

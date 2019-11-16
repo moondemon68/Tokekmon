@@ -1,5 +1,5 @@
 start :-
-	(\+game(_);game(X),X\==1),
+	(\+game(_);game(X),X==0),
 	animatePikachu1,
 	sleep(0.2),
 	cls,
@@ -58,9 +58,10 @@ quit :-
 	halt.
 
 heal :- 
-	player(_,_,DoneGym,_),
+	player(X,Y,DoneGym,_),
+	mapItem(X,Y,gym),
 	(DoneGym == 0 ->  write('Tengtengtengtengteng! All your tokemons are healthy now!'), healT, retract(player(A,B,_,C)),assertz(player(A,B,1,C));
-	DoneGym == 1 -> write('You already visited Gym! Cannot heal! ULULULU')).
+	DoneGym == 1 -> write('You already visited Gym! Cannot heal! ULULULU')),!.
 
 healT :- 
 	forall(tokemon(Tokemon), healT2(Tokemon)).
