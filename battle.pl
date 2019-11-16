@@ -8,7 +8,7 @@ initBattle(EnemyT,PlayerT) :-
     asserta(tokemonInBattle(PlayerT,player)),
     asserta(haveUsedSkill(0,player)),
     asserta(haveUsedSkill(0,enemy)),
-    asserta(turn(1)).
+    asserta(turn(0)).
 
 checkTokemon :-
     player(X, Y, _, _),
@@ -16,8 +16,11 @@ checkTokemon :-
     findTokemon(Tokemon).
 
 % trying to escape from battle
-escape :-
-    write('You escaped from battle!.'), nl, !.
+escape(EnemyT) :-
+    random(0, 101, Rand),
+    (Rand > 70 ->
+        beginBattle(EnemyT);
+    write('You escaped from battle!.'), nl), !.
 
 % chose tokemon
 choseTokemon(Tokemon) :-
@@ -75,7 +78,17 @@ gameOver :-
     write('Game Over'), nl, !.
 
 winBattle :-
-    write('You won the battle'), nl, !.
+    write('You won the battle'), nl,
+
+    tokemonInBattle(EnemyT, enemy),
+    write('Do you want to capture '), write(EnemyT), write(' ? (y/n) :'),
+    read(Command), nl,
+    
+    (Command == y ->
+        addTokemon(EnemyT),
+        write('You captured '), write(EnemyT), nl;
+    Command == n ->
+        map).
 
 loseBattle :-
     tokemonInBattle(PlayerT, player),
@@ -152,12 +165,14 @@ beginBattle(EnemyT) :-
 % find tokemon
 findTokemon(EnemyT) :-
     cls,
+    isLegendary(EnemyT, Is),
+    (Is == 1 -> chance(30);chance(60)),
     write('Wild ' ), % Wild ____ Appear
     write(EnemyT),
-    write(' appear!'),nl,
+    write(' appear!'), nl,
     tokemonStatus(EnemyT),
     write('fight? (y/n) : '), 
     read(Command), nl, % Read command
     cls,
     % choose to fight or escape
-    (Command == 'y' -> beginBattle(EnemyT); escape).
+    (Command == 'y' -> beginBattle(EnemyT); escape(EnemyT)).

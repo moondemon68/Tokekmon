@@ -1,5 +1,4 @@
-start :- 
-	title,
+start :-
 	write('Prolog : Tokemon ! Gotta catch \'em all'), nl,
 	write('Hello There! Welcome to Tugas Besar Logkom! '), nl,
 	write('My name is SHiNY and today you are lucky meeting me here.'), nl,
@@ -15,7 +14,9 @@ start :-
 	initMap,
 	initPlayer,
 	initTokemon,
-	initTokemonPosition, !.
+	initBattle, 
+	(asserta(game(1));setGame(1)),
+	!.
 
 help :-
 	cls,
@@ -57,26 +58,45 @@ map :-
 	printMap(1, 1), !.
 
 w :-
+	game(1),
     moveW,
 	msgW,
 	map,
 	checkTokemon,
     !.
+% w :-
+% 	game(_),
+% 	write('This command can only be used when exploring!'), nl, !.
+
 s :-
+	game(1),
     moveS,
 	msgS,
 	map,
 	checkTokemon,
     !.
+% s :-
+	% game(_),
+	% write('This command can only be used when exploring!'), nl, !.
+
 a :-
+	game(1),
     moveA,
 	msgA,
 	map,
 	checkTokemon,
     !.
+% a :-
+	% game(_),
+	% write('This command can only be used when exploring!'), nl, !.
+
 d :-
+	game(1),
     moveD,
 	msgD,
 	map,
 	checkTokemon,
     !.
+% d :-
+	% game(_),
+	% write('This command can only be used when exploring!'), nl, !.

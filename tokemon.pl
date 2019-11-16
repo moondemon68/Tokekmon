@@ -5,6 +5,7 @@
 :- dynamic(hp/2).
 :- dynamic(position/3).
 :- dynamic(allTokemon/1).
+:- dynamic(allTokemon/1).
 
 tokemon(budi).
 tokemon(rali).
@@ -24,7 +25,7 @@ attribute(abuy, water).
 attribute(ibunyabudi, fire).
 attribute(engi, water).
 attribute(poontoon, leaf).
-normalDamage(budi,10).
+normalDamage(budi,25).
 normalDamage(rali, 20).
 normalDamage(carimender, 6).
 normalDamage(harlele,1).
@@ -33,7 +34,7 @@ normalDamage(abuy, 35).
 normalDamage(ibunyabudi, 81).
 normalDamage(engi, 100).
 normalDamage(poontoon, 500).
-skillDamage(budi, 25).
+skillDamage(budi, 3000).
 skillDamage(rali, 50).
 skillDamage(carimender, 52).
 skillDamage(harlele,35).
@@ -43,6 +44,7 @@ skillDamage(ibunyabudi, 470).
 skillDamage(engi, 225).
 skillDamage(poontoon, 1250).
 isLegendary(budi, 0).
+isLegendary(rali, 0).
 isLegendary(harlele, 0).
 isLegendary(carimender, 0).
 isLegendary(harlele, 0).
@@ -57,14 +59,12 @@ randomPositionTokemon(X, Y) :-
     \+(position(_, X, Y)).
 
 initTokemonPosition :-
-    tokemon(Tokemon),
-    Tokemon \== budi,
-    randomPositionTokemon(X, Y),
-    asserta(position(Tokemon, X, Y)).
-
+    forall(tokemon(Tokemon), (tokemon \== budi, randomPosition(X, Y), asserta(position(Tokemon, X, Y)))).
+    
 initTokemon :-
     initTokemonPosition,
-    asserta(hp(budi,10)),
+    asserta(allTokemon([rali, carimender, harlele, camcam, abuy, ibunyabudi, engi, poontoon])),
+    asserta(hp(budi,1200)),
     asserta(hp(rali, 100)),
     asserta(hp(carimender, 123)),
     asserta(hp(harlele,10)),
@@ -85,14 +85,14 @@ tokemonStatus(Tokemon) :-
     normalDamage(Tokemon, NormalDmg),
     skillDamage(Tokemon, SkillDmg),
     isLegendary(Tokemon, IsLegendary),
-    write('======================================='), nl,
+    divider,
     write(' Name\t\t: '), write(Tokemon), nl,
     write(' Attribut\t: '), write(Att), nl,
     write(' HP\t\t: '), write(Hp), nl, 
     write(' Normal Damage\t: '), write(NormalDmg), nl, 
     write(' Skill Damage\t: '), write(SkillDmg), nl,
     write(' Legendary\t: '), (IsLegendary == 1 -> write('yes'); write('no')), nl,
-    write('======================================='), nl,
+    divider,
     !.
 
 tokemonPost :-

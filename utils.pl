@@ -27,7 +27,7 @@ randomPosition(X, Y) :-
 % Generate random number (for chance percentage)
 chance(X) :-
     random(0, 101, Rand),
-    write(Rand),
+    % write(Rand),
     Rand =< X.
 
 % Delete one item from list
@@ -40,14 +40,11 @@ deleteList(I, [H|T], [H|R]) :-
 % <number>. <List element>
 % ...................
 % ...................
-printList([],_).
-printList(List, N) :-
+printList([]).
+printList(List) :-
     List = [H|T],
-    write(N),
-    write('. '),
-    write(H),nl,
-    N2 is N+1,
-    printList(T,N2). 
+    write(H), nl,
+    printList(T). 
 
 % Count list element
 countList([], 0).
@@ -62,8 +59,16 @@ elByIndex(List, Idx, El) :-
     Idx2 is Idx-1,
     elByIndex(T, Idx2, El).
 
+isMember([E|_],E).
+isMember(List, E) :-
+    List = [_|T],
+    isMember(T, E).
+
 % Clear screen
 cls :- shell(clear).
+
+divider :-
+    write('========================================================='), nl.
 
 title :-
     write('                        .*/##*.              .*.  .*#*                             .*******###%*        *,.                              '), nl, 
