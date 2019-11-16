@@ -9,7 +9,6 @@ initBattle :-
     asserta(haveUsedSkill(0, enemy)), !.
 
 checkTokemon :-
-<<<<<<< HEAD
     % player(X, Y, _, _),
     % position(Tokemon, X, Y),
     % findTokemon(Tokemon), !.
@@ -27,14 +26,6 @@ checkTokemon :-
     ), 
     write(Rand), nl,
     findTokemon(Tokemon), !.
-    
-=======
-    random(1, 101, Random),
-    write(Random),
-    (Random =< 99 -> allTokemon(L), countList(L, X), X2 is X+1, random(1, X2, TRandom), elByIndex(L, TRandom, Tokemon), write(Tokemon), isLegendary(Tokemon, 0), findTokemon(Tokemon);
-    Random == 100 -> allTokemon(L), countList(L, X), X2 is X+1, random(1, X2, TRandom), elByIndex(L, TRandom, Tokemon), isLegendary(Tokemon, 1), findTokemon(Tokemon))
-    , !.
->>>>>>> 5041d0397e41cb0f14e6f28ebbf351cc5f5c7f49
 
 % trying to escape from battle
 escape :-
