@@ -18,9 +18,11 @@ checkTokemon :-
 escape :-
     random(0, 101, Rand),
     (Rand > 70 ->
+        cls,
         write('Failed to escape!'), nl,
+        hpBar,
         battle;
-    write('You escaped from battle!')), nl, !.
+    write('You escaped from battle!'), setGame(1)), nl, !.
 
 % chose tokemon
 changeTokemon :-
@@ -113,8 +115,15 @@ winBattle :-
 
 capture :-
     game(5),
-    tokemonInBattle(Tokemon, enemy),
-    write('You captured '), write(Tokemon), write('!'), nl, !.
+    player(_, _, _, TokemonList),
+    countList(TokemonList, N),
+    (N == 6 ->
+        write('Your inventory is full, "drop" some before you catch more tokemon'), nl;
+        setGame(1),
+        tokemonInBattle(Tokemon, enemy),
+        write('You captured '), write(Tokemon), write('!'), nl
+    ), !.
+
 release :-
     setGame(1),
     map, !.

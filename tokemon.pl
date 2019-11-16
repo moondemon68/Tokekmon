@@ -100,17 +100,15 @@ tokemonPost :-
     position(T, X, Y),
     write(T), write(' '), write(X), write(' '), write(Y), nl.
 
-moveTokemon :-
-    tokemon(Tokemon),
-    random(0, 5, Rand),
-    (Rand == 1 ->
-        tmoveW(Tokemon);
-    Rand == 2 ->
-        tmoveS(Tokemon);
-    Rand == 3 ->
-        tmoveA(Tokemon);
-    Rand == 4 ->
-        tmoveD(Tokemon)).
+moveTokemon :- forall(tokemon(Tokemon), tmove(Tokemon)).
+
+tmove(Tokemon) :-
+    random(1, 5, Rand),
+    (Rand == 1 -> tmoveW(Tokemon);
+    Rand == 2 -> tmoveS(Tokemon);
+    Rand == 3 -> tmoveA(Tokemon);
+    Rand == 4 -> tmoveD(Tokemon)).
+tmove(Tokemon) :- tmove(Tokemon). % Disini masih ada bug
 
 tmoveW(Tokemon) :-
     position(Tokemon, X, CurY),
@@ -118,8 +116,9 @@ tmoveW(Tokemon) :-
     Y is CurY - 1,
     mapItem(X, Y, Item),!,
     Item \== fence,
-    retract(position(X, CurY)),
-    asserta(position(X, Y)).
+    \+position(_, X, Y),
+    retract(position(Tokemon, X, CurY)),
+    asserta(position(Tokemon, X, Y)).
 
 tmoveS(Tokemon) :-
     position(Tokemon, X, CurY),
@@ -128,8 +127,8 @@ tmoveS(Tokemon) :-
     mapItem(X, Y, Item),!,
     Item \== fence,
     \+position(_, X, Y),
-    retract(position(X, CurY)),
-    asserta(position(X, Y)).
+    retract(position(Tokemon, X, CurY)),
+    asserta(position(Tokemon, X, Y)).
 
 tmoveA(Tokemon) :-
     position(Tokemon, CurX, Y),
@@ -138,8 +137,8 @@ tmoveA(Tokemon) :-
     mapItem(X, Y, Item),!,
     Item \== fence,
     \+position(_, X, Y),
-    retract(position(CurX, Y)),
-    asserta(position(X, Y)).
+    retract(position(Tokemon, CurX, Y)),
+    asserta(position(Tokemon, X, Y)).
 
 tmoveD(Tokemon) :-
     position(Tokemon, CurX, Y),
@@ -148,5 +147,5 @@ tmoveD(Tokemon) :-
     mapItem(X, Y, Item),!,
     Item \== fence,
     \+position(_, X, Y),
-    retract(position(CurX, Y)),
-    asserta(position(X, Y)).
+    retract(position(Tokemon, CurX, Y)),
+    asserta(position(Tokemon, X, Y)).

@@ -34,7 +34,7 @@ moveW :-
     mapItem(X, Y, Item),!,
     Item \== fence,
     retract(player(X, CurY, DoneGym, TokemonList)),
-    asserta(player(X, Y, DoneGym, TokemonList)).
+    asserta(player(X, Y, DoneGym, TokemonList)), !.
 
 moveS :-
     player(X, CurY, DoneGym, TokemonList),
@@ -43,7 +43,7 @@ moveS :-
     mapItem(X, Y, Item),!,
     Item \== fence,
     retract(player(X, CurY, DoneGym, TokemonList)),
-    asserta(player(X, Y, DoneGym, TokemonList)).
+    asserta(player(X, Y, DoneGym, TokemonList)), !.
 
 moveA :-
     player(CurX, Y, DoneGym, TokemonList),
@@ -52,7 +52,7 @@ moveA :-
     mapItem(X, Y, Item),!,
     Item \== fence,
     retract(player(CurX, Y, DoneGym, TokemonList)),
-    asserta(player(X, Y, DoneGym, TokemonList)).
+    asserta(player(X, Y, DoneGym, TokemonList)), !.
 
 moveD :-
     player(CurX, Y, DoneGym, TokemonList),
@@ -61,4 +61,4 @@ moveD :-
     mapItem(X, Y, Item),!,
     Item \== fence,
     retract(player(CurX, Y, DoneGym, TokemonList)),
-    asserta(player(X, Y, DoneGym, TokemonList)).
+    asserta(player(X, Y, DoneGym, TokemonList)), !.
