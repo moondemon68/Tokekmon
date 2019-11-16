@@ -129,8 +129,9 @@ capture :-
     game(5),
     player(_, _, _, TokemonList),
     countList(TokemonList, N),
-    (N == 6 ->
-        write('Your inventory is full, "drop" some before you catch more tokemon'), nl;
+    (
+        N == 6 -> write('Your inventory is full, "drop" some before you catch more tokemon'), nl
+        ;
         setGame(1),
         tokemonInBattle(Tokemon, enemy),
         addTokemon(Tokemon),
