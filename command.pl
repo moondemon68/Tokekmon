@@ -39,12 +39,21 @@ quit :-
 	write('Bye-bye!'), nl,
 	halt.
 
-%heal :- 
-	%startDoneGym(DoneGym),
-	%(DoneGym == 0 ->  write('Tengtengtengtengteng'), healT;
-	%DoneGym == 1 -> write('You already visited Gym! Cannot heal! ULULULU')).
+heal :- 
+	player(_,_,DoneGym,_),
+	(DoneGym == 0 ->  write('Tengtengtengtengteng! All your tokemons are healthy now!'), healT, retract(player(_,_,_,_)),assertz(player(_,_,1,_));
+	DoneGym == 1 -> write('You already visited Gym! Cannot heal! ULULULU')).
 
-%healT :- asserta(player(X, Y, 1, TokemonList)),
+healT :- 
+	forall(tokemon(Tokemon), healT2(Tokemon)).
+
+healT2(Tokemon) :-
+	player(_,_,_,TokemonList),
+	isMember(TokemonList,Tokemon),
+	starthp(Tokemon,X),
+	setHp(Tokemon,X).
+
+healT2(_).
 
 status :- 
 	cls,
