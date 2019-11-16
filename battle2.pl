@@ -24,6 +24,7 @@ checkTokemon :-
 
 % trying to escape from battle
 escape :-
+    game(2),
     random(0, 101, Rand),
     (Rand > 70 ->
         cls,
@@ -122,7 +123,11 @@ winBattle :-
     
     tokemonInBattle(EnemyT, enemy),
     delTokemon(EnemyT),
+<<<<<<< HEAD
     write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "eggxecute" !'), nl.
+=======
+    write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "eggxecute" !'), nl. 
+>>>>>>> 622e944572ea9e60b3d52c2259f16069e27ead43
 
 capture :-
     game(5),
@@ -138,7 +143,7 @@ capture :-
         setHp(Tokemon, StartHP)
     ), !.
 
-release :-
+eggxecute :-
     setGame(1),
     map, !.
 
@@ -202,6 +207,7 @@ findTokemon(EnemyT) :-
     divider, !.
     
 fight :-
+    game(2),
     setGame(3),
     cls,
     nl, write('C\'mon, choose your partner!'), nl, 
