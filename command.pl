@@ -114,25 +114,25 @@ s :-
 	game(1),
 	moveS,
 	map,
+	checkTokemon,
 	msgS,
 	isGym,
-	checkTokemon,
     !.
 
 a :-
 	game(1),
 	moveA,
 	map,
-	msgA,
 	checkTokemon,
+	msgA,
 	isGym,
     !.
 
 d :-
 	game(1),
 	moveD,
-	map,
-	msgD,
+	map,	
 	checkTokemon,
+	msgD,
 	isGym,
     !.
