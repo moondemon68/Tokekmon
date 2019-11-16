@@ -24,6 +24,7 @@ start :-
 	write('This world is now dijajah by Tokemon, especially the legendary one.'), nl,
 	write('You got one job, which is to capture those Legendary Tokemon to rescue the world like the avenger!!.'), nl,
 	write(''), nl,
+	sleep(0.5),
 	help, nl,
 	write('Legends:'), nl,
 	write('  X = Pagar'), nl,

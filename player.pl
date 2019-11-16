@@ -25,7 +25,7 @@ delTokemon(Tokemon) :-
     assertz(player(X, Y, DoneGym, NewTokemonList)).
 
 delTokemon2(Tokemon) :-
-    retract(allTokemon(TokemonList)),
+    retract(allTokemon(TokemonList)),   
     deleteList(Tokemon, TokemonList, NewTokemonList),
     assertz(allTokemon(NewTokemonList)),
     retract(position(Tokemon, _, _)),

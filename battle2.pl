@@ -45,13 +45,19 @@ attack :-
     game(4),
     tokemonInBattle(Victim, enemy),
     tokemonInBattle(Attacker, player),
+    attribute(Victim,Y),
+    attribute(Attacker,X),
     normalDamage(Attacker, Dmg),
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    write(Victim), write(' took '), write(Dmg), write(' damage'), nl,
+    EDmg is Dmg,
+    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg));
+    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor (0.5*Dmg));
+    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg))),
+    write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider,
-    NewHp is Hp-Dmg,
+    NewHp is Hp-EDmg,
     setHp(Victim, NewHp), 
     checkStatus, !.
 attack :-
@@ -63,13 +69,19 @@ skill :-
     haveUsedSkill(0, player),
     tokemonInBattle(Victim, enemy),
     tokemonInBattle(Attacker, player),
+    attribute(Attacker,X),
+    attribute(Victim,Y),
     skillDamage(Attacker, Dmg),
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    write(Victim), write(' took '), write(Dmg), write(' damage'), nl, 
+    EDmg is Dmg,
+    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg));
+    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor (0.5*Dmg));
+    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg))),
+    write(Victim), write(' took '), write(EDmg), write(' damage'), nl, 
     divider,
-    NewHp is Hp-Dmg,
+    NewHp is Hp-EDmg,
     setHp(Victim, NewHp), 
     retract(haveUsedSkill(_, player)),
     assertz(haveUsedSkill(1, player)),
@@ -91,11 +103,17 @@ resetSkill :-
 enemyAttack :-
     tokemonInBattle(Victim, player),
     tokemonInBattle(Attacker, enemy),
+    attribute(Attacker,X),
+    attribute(Victim,Y),
     normalDamage(Attacker, Dmg),
+    EDmg is Dmg,
+    ((X == fire) -> (Y == water -> EDmg is floor(0.5*Dmg); Y == leaf -> EDmg is floor(1.5*Dmg));
+    (X == water) -> (Y == fire -> EDmg is floor(1.5*Dmg); Y == leaf -> EDmg is floor (0.5*Dmg));
+    (X == leaf) -> (Y == fire -> EDmg is floor(0.5*Dmg); Y == water -> EDmg is floor(1.5*Dmg))),
     hp(Victim, Hp),
-    write(Victim), write(' took '), write(Dmg), write(' damage'), nl,
+    write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider, nl,
-    NewHp is Hp-Dmg,
+    NewHp is Hp-EDmg,
     setHp(Victim, NewHp), 
     checkStatus, !.
 

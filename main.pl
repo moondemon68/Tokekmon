@@ -7,7 +7,7 @@
 :- include('map.pl').
 :- include('battle2.pl').
 :- include('tokemon.pl').
-:- include('saveload.pl').
+%:- include('saveload.pl').
 
 setGame(Game) :-
     retract((game(_))),
