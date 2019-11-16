@@ -104,9 +104,9 @@ w :-
 	game(1),
 	moveW,
 	map,
+	msgW,
 	checkTokemon,
 	isGym,
-	msgW,
 	write('Good ....'), nl,
     !.
 

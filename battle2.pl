@@ -8,24 +8,32 @@ initBattle :-
     asserta(haveUsedSkill(0, player)),
     asserta(haveUsedSkill(0, enemy)), !.
 
+countTokemon(IsLegend, Result) :-
+    allTokemon(List), countTokemon(IsLegend, Result, List).
+countTokemon(_, 0, []).
+countTokemon(IsLegend, Result, [H|T]) :-
+    (isLegendary(H, IsLegend), countTokemon(IsLegend, Res2, T), Result is Res2 + 1
+    ;
+    !, countTokemon(IsLegend, Result, T)).
+
+getTokemonByIndex(IsLegend, Index, Res) :-
+    allTokemon(List), getTokemonByIndex(IsLegend, Index, List, Res).
+getTokemonByIndex(IsLegend, Index, [H|T], Res) :-
+    (
+        Index == 1 -> isLegendary(H, IsLegend), Res = H;
+        (
+            isLegendary(H, IsLegend), Index2 is Index - 1;
+            Index2 is Index
+        ),
+        getTokemonByIndex(IsLegend, Index2, T, Res)
+    ).
+
 checkTokemon :-
-    % player(X, Y, _, _),
-    % position(Tokemon, X, Y),
-    % findTokemon(Tokemon), !.
-    random(1, 101, Rand),
-    (Rand < 26  ->
-        random(1, 10, Rand2), 
-        allTokemon(TokemonList), 
-        elByIndex(TokemonList, Rand2, Tokemon), 
-        isLegendary(Tokemon, 0);
-    Rand > 94 ->
-        random(1, 10, Rand2), 
-        allTokemon(TokemonList), 
-        elByIndex(TokemonList, Rand2, Tokemon), 
-        isLegendary(Tokemon, 1)
-    ), 
-    write(Rand), nl,
-    findTokemon(Tokemon), !.
+    random(1, 101, Random),
+    write(Random),
+    (Random == 1 -> countTokemon(0, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(0, TRandom, Tokemon), findTokemon(Tokemon);
+    Random =< 5 -> countTokemon(1, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(1, TRandom, Tokemon), findTokemon(Tokemon))
+    , !.
 
 % trying to escape from battle
 escape :-
