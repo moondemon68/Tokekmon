@@ -79,7 +79,14 @@ status :-
 	cls,
 	write('Your Tokemon:'), nl,
 	player(_, _, _, TokemonList),
-    printTokemon(TokemonList).
+    printTokemon(TokemonList),
+	write('\nLegendary Tokemon to defeat :(in case you wanna win this game)\n'),
+	allTokemon(X),
+	printLegendary(X).
+
+printLegendary([]):-!.
+printLegendary([H|T]):-
+	isLegendary(H, 1) -> tokemonStatus(H), printLegendary(T); printLegendary(T).
 
 printTokemon([]):-!.
 printTokemon([H|T]):-
