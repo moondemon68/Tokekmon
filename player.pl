@@ -31,8 +31,6 @@ delTokemon2(Tokemon) :-
     retract(position(Tokemon, _, _)),
     assertz(position(Tokemon, -1, -1)), !.
 
-drop(Tokemon) :- delTokemon(Tokemon), !.
-
 % Movement (wasd)
 moveW :-
     player(X, CurY, DoneGym, TokemonList),
