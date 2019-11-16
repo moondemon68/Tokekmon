@@ -123,7 +123,7 @@ winBattle :-
     
     tokemonInBattle(EnemyT, enemy),
     delTokemon(EnemyT),
-    write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "eggxecute" !'), nl, 
+    write('Type "capture" to take '), write(EnemyT), write(' as your tokemon or "eggxecute" !'), nl. 
 
 capture :-
     game(5),
@@ -139,7 +139,7 @@ capture :-
         setHp(Tokemon, StartHP)
     ), !.
 
-release :-
+eggxecute :-
     setGame(1),
     map, !.
 
