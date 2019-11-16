@@ -103,95 +103,41 @@ w :-
 	game(1),
 	moveW,
 	map,
+	checkTokemon,
 	isGym,
 	msgW,
-	checkTokemon,
+	write('Good ....'), nl,
     !.
-w :-
-	game(1),
-	moveTokemon,
-	moveWf,
-	checkTokemon, !.
-% w :-
-% 	game(_),
-% 	write('This command can only be used when exploring!'), nl, !.
 
 s :-
 	game(1),
 	moveS,
 	map,
 	msgS,
-	isGym,
-	moveTokemon,
 	checkTokemon,
+	isGym,
+	% moveTokemon,
+	write('Good ....'), nl,
     !.
-s :-
-	game(1),
-	moveTokemon,
-	movesf,
-	checkTokemon, !.
-
-movesf :-
-	player(X, CurY, _, _),
-    Y is CurY + 1,
-	mapItem(X, Y, fence),!,
-	write('There\'s a fence in front of you!.').
-
-% s :-
-% 	game(_),
-	% write('This command can only be used when exploring!'), nl, !.
 
 a :-
 	game(1),
 	moveA,
 	map,
-	msgA,moveTokemon,
+	msgA,
 	checkTokemon,
 	isGym,
-	moveTokemon,
-	checkTokemon,
+	% moveTokemon,
+	write('Good ....'), nl,
     !.
-
-a :-
-	game(1),
-	moveTokemon,
-	moveaf,
-	checkTokemon, !.
-
-
-moveaf :-
-	player(CurX, Y, _, _),
-    X is CurX - 1,
-	mapItem(X, Y, fence),!,
-	write('There\'s a fence in front of you!.').
-
-% a :-
-% 	game(_),
-% 	write('This command can only be used when exploring!'), nl, !.
 
 d :-
 	game(1),
 	moveD,
 	map,
 	msgD,
-	isGym,
-	moveTokemon,
 	checkTokemon,
+	isGym,	
+	% moveTokemon,
+	write('Good ....'), nl,
     !.
-
-d :-
-	game(1),
-	moveTokemon,
-	movedf,
-	checkTokemon, !.
-
-
-movedf :-
-	player(CurX, Y, _, _),
-    X is CurX + 1,
-	mapItem(X, Y, fence),!,
-	write('There\'s a fence in front of you!.').
-
-% d :-
-% 	game(_),
-% 	write('This command can only be used when exploring!'), nl, !.

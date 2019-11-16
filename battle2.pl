@@ -4,23 +4,29 @@
 
 % battle initialitation
 initBattle :-
-    asserta(turn(0)),
-    asserta(tokemon(none, player)),
-    asserta(tokemon(none, enemy)),
+    asserta(turn(0)), 
     asserta(haveUsedSkill(0, player)),
-    asserta(haveUsedSkill(0, enemy)).
-initBattle :-
-    retract(turn(_)),
-    assertz(turn(0)),
-    retract(haveUsedSkill(_, player)),
-    assertz(haveUsedSkill(0, player)),
-    retract(haveUsedSkill(_, enemy)),
-    assertz(haveUsedSkill(0, enemy)), !.
+    asserta(haveUsedSkill(0, enemy)), !.
 
 checkTokemon :-
-    player(X, Y, _, _),
-    position(Tokemon, X, Y),
+    % player(X, Y, _, _),
+    % position(Tokemon, X, Y),
+    % findTokemon(Tokemon), !.
+    random(1, 101, Rand),
+    (Rand < 26  ->
+        random(1, 10, Rand2), 
+        allTokemon(TokemonList), 
+        elByIndex(TokemonList, Rand2, Tokemon), 
+        isLegendary(Tokemon, 0);
+    Rand > 94 ->
+        random(1, 10, Rand2), 
+        allTokemon(TokemonList), 
+        elByIndex(TokemonList, Rand2, Tokemon), 
+        isLegendary(Tokemon, 1)
+    ), 
+    write(Rand), nl,
     findTokemon(Tokemon), !.
+    
 
 % trying to escape from battle
 escape :-
@@ -61,6 +67,8 @@ attack :-
 skill :-
     game(4),
     haveUsedSkill(0, player),
+    retract(haveUsedSkill(_, player)),
+    assertz(haveUsedSkill(1, player)),
     tokemonInBattle(Victim, enemy),
     tokemonInBattle(Attacker, player),
     skillDamage(Attacker, Dmg),
@@ -71,8 +79,6 @@ skill :-
     divider,
     NewHp is Hp-Dmg,
     setHp(Victim, NewHp), 
-    retract(haveUsedSkill(_, player)),
-    assertz(haveUsedSkill(1, player)),
     checkStatus, !.
 
 skill :- 
@@ -95,7 +101,6 @@ enemyAttack :-
     (Have == 0 ->
         skillDamage(Attacker, Dmg), retract(haveUsedSkill(_, enemy)), assertz(haveUsedSkill(1, enemy));
     normalDamage(Attacker, Dmg)),
-    normalDamage(Attacker, Dmg),
     hp(Victim, Hp),
     write(Victim), write(' took '), write(Dmg), write(' damage'), nl,
     divider, nl,
@@ -168,7 +173,7 @@ nexTurn :-
 
     % update turn
     retract(turn(_)),
-    assertz(turn(NextTurn)),
+    asserta(turn(NextTurn)),
 
     % back to battle
     battle, !.
@@ -195,14 +200,14 @@ battle :-
 
 % find tokemon
 findTokemon(EnemyT) :-
-    isLegendary(EnemyT, Is),
-    (Is == 1 -> chance(30);chance(100)),
     allTokemon(TokemonList),
     isMember(EnemyT, TokemonList),
     cls,
     write('Wild ' ), write(EnemyT), write(' appear!'), nl,
     tokemonStatus(EnemyT),
-    asserta(tokemonInBattle(EnemyT, enemy)),
+    (asserta(tokemonInBattle(EnemyT, enemy));
+    retract(tokemonInBattle(EnemyT, enemy)),
+    assertz(tokemonInBattle(EnemyT, enemy))),
     setGame(2),
     write('Type "fight" to begin battle or "escape" to run'), nl,
     divider, !.
@@ -217,18 +222,21 @@ fight :-
     divider,
     write('[Available tokemon] : '), 
     player(_, _, _, TokemonList),
-    initBattle,
     write(TokemonList), nl,
     divider, !.
 
 summon(Tokemon) :-
     cls,
+    player(_, _, _, TokemonList),
+    isMember(Tokemon, TokemonList),
     asserta(tokemonInBattle(Tokemon, player)),
     divider,
     write('Summoning '), write(Tokemon), write('.................'), nl,
     divider,
     battle, !.
 summon(Tokemon) :-
+    player(_, _, _, TokemonList),
+    isMember(Tokemon, TokemonList),
     retract(tokemonInBattle(_, player)) ->
     assertz(tokemonInBattle(Tokemon, player)),
     divider,
