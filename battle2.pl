@@ -31,8 +31,8 @@ getTokemonByIndex(IsLegend, Index, [H|T], Res) :-
 checkTokemon :-
     random(1, 101, Random),
     write(Random),
-    (Random == 1 -> countTokemon(0, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(0, TRandom, Tokemon), findTokemon(Tokemon);
-    Random =< 5 -> countTokemon(1, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(1, TRandom, Tokemon), findTokemon(Tokemon))
+    (Random =< 5 -> countTokemon(1, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(1, TRandom, Tokemon), findTokemon(Tokemon);
+     Random =< 25 -> countTokemon(0, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(0, TRandom, Tokemon), findTokemon(Tokemon))
     , !.
 
 % trying to escape from battle
