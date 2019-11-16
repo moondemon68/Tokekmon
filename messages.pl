@@ -13,4 +13,5 @@ msgGym :-
     write('\nYou are now in the Gym!\n'),
     write('You can only heal once.\n'),
     write('Write "heal" to heal, ignore me if you don\'t want to\n').
-
+newline :-
+    write('\n').
