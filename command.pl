@@ -24,6 +24,7 @@ start :-
 	write('This world is now dijajah by Tokemon, especially the legendary one.'), nl,
 	write('You got one job, which is to capture those Legendary Tokemon to rescue the world like the avenger!!.'), nl,
 	write(''), nl,
+	sleep(0.5),
 	help, nl,
 	write('Legends:'), nl,
 	write('  X = Pagar'), nl,
@@ -49,8 +50,8 @@ help :-
 	write('  w. a. s. d.\t\t-- Move (Like In Point Blank)'), nl,
 	write('  heal.\t\t\t-- Heal Tokemon if you are in gym center'), nl,
 	write('  status.\t\t-- Status'), nl,
-	write('  save(Filename).\t-- Save game'), nl,
-	write('  load(Filename).\t-- Load game'), nl. 
+	write('  saveGame(Filename).\t-- Save game'), nl,
+	write('  loadGame(Filename).\t-- Load game'), nl. 
 
 quit :- 
 	cls,
@@ -114,10 +115,8 @@ s :-
 	moveS,
 	map,
 	msgS,
-	checkTokemon,
 	isGym,
-	% moveTokemon,
-	write('Good ....'), nl,
+	checkTokemon,
     !.
 
 a :-
@@ -127,8 +126,6 @@ a :-
 	msgA,
 	checkTokemon,
 	isGym,
-	% moveTokemon,
-	write('Good ....'), nl,
     !.
 
 d :-
@@ -137,7 +134,5 @@ d :-
 	map,
 	msgD,
 	checkTokemon,
-	isGym,	
-	% moveTokemon,
-	write('Good ....'), nl,
+	isGym,
     !.

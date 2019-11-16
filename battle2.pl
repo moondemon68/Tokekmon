@@ -9,6 +9,7 @@ initBattle :-
     asserta(haveUsedSkill(0, enemy)), !.
 
 checkTokemon :-
+<<<<<<< HEAD
     % player(X, Y, _, _),
     % position(Tokemon, X, Y),
     % findTokemon(Tokemon), !.
@@ -27,6 +28,13 @@ checkTokemon :-
     write(Rand), nl,
     findTokemon(Tokemon), !.
     
+=======
+    random(1, 101, Random),
+    write(Random),
+    (Random =< 99 -> allTokemon(L), countList(L, X), X2 is X+1, random(1, X2, TRandom), elByIndex(L, TRandom, Tokemon), write(Tokemon), isLegendary(Tokemon, 0), findTokemon(Tokemon);
+    Random == 100 -> allTokemon(L), countList(L, X), X2 is X+1, random(1, X2, TRandom), elByIndex(L, TRandom, Tokemon), isLegendary(Tokemon, 1), findTokemon(Tokemon))
+    , !.
+>>>>>>> 5041d0397e41cb0f14e6f28ebbf351cc5f5c7f49
 
 % trying to escape from battle
 escape :-
@@ -51,13 +59,21 @@ attack :-
     game(4),
     tokemonInBattle(Victim, enemy),
     tokemonInBattle(Attacker, player),
+    attribute(Victim,Y),
+    attribute(Attacker,X),
     normalDamage(Attacker, Dmg),
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    write(Victim), write(' took '), write(Dmg), write(' damage'), nl,
+    ((X == fire) -> (Y == water,Y == daemon -> EDmg is floor(0.5*Dmg); Y == leaf,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == water) -> (Y == fire, Y == angmud-> EDmg is floor(1.5*Dmg); Y == leaf,Y == daemon -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
+    (X == leaf) -> (Y == fire,Y == daemon -> EDmg is floor(0.5*Dmg); Y == water,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == daemon) -> (Y == daemon -> EDmg is Dmg; EDmg is floor(1.5*Dmg));
+    (X == angmud) -> (Y == angmud -> EDmg is Dmg; EDmg is floor(0.5*Dmg)),
+    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg),EDmg is Dmg)), 
+    write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider,
-    NewHp is Hp-Dmg,
+    NewHp is Hp-EDmg,
     setHp(Victim, NewHp), 
     checkStatus, !.
 attack :-
@@ -71,13 +87,21 @@ skill :-
     assertz(haveUsedSkill(1, player)),
     tokemonInBattle(Victim, enemy),
     tokemonInBattle(Attacker, player),
+    attribute(Attacker,X),
+    attribute(Victim,Y),
     skillDamage(Attacker, Dmg),
     hp(Victim, Hp),
     cls,
     write('Attacking enemy'), nl,
-    write(Victim), write(' took '), write(Dmg), write(' damage'), nl, 
+    ((X == fire) -> (Y == water,Y == daemon -> EDmg is floor(0.5*Dmg); Y == leaf,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == water) -> (Y == fire, Y == angmud-> EDmg is floor(1.5*Dmg); Y == leaf,Y == daemon -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
+    (X == leaf) -> (Y == fire,Y == daemon -> EDmg is floor(0.5*Dmg); Y == water,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == daemon) -> (Y == daemon -> EDmg is Dmg; EDmg is floor(1.5*Dmg));
+    (X == angmud) -> (Y == angmud -> EDmg is Dmg; EDmg is floor(0.5*Dmg)),
+    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg),EDmg is Dmg)), 
+    write(Victim), write(' took '), write(EDmg), write(' damage'), nl, 
     divider,
-    NewHp is Hp-Dmg,
+    NewHp is Hp-EDmg,
     setHp(Victim, NewHp), 
     checkStatus, !.
 
@@ -97,14 +121,22 @@ resetSkill :-
 enemyAttack :-
     tokemonInBattle(Victim, player),
     tokemonInBattle(Attacker, enemy),
+    attribute(Attacker,X),
+    attribute(Victim,Y),
     haveUsedSkill(Have, enemy),
     (Have == 0 ->
-        skillDamage(Attacker, Dmg), retract(haveUsedSkill(_, enemy)), assertz(haveUsedSkill(1, enemy));
+    skillDamage(Attacker, Dmg), retract(haveUsedSkill(_, enemy)), assertz(haveUsedSkill(1, enemy));
     normalDamage(Attacker, Dmg)),
+    ((X == fire) -> (Y == water,Y == daemon -> EDmg is floor(0.5*Dmg); Y == leaf,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == water) -> (Y == fire, Y == angmud-> EDmg is floor(1.5*Dmg); Y == leaf,Y == daemon -> EDmg is floor(0.5*Dmg);EDmg is Dmg);
+    (X == leaf) -> (Y == fire,Y == daemon -> EDmg is floor(0.5*Dmg); Y == water,Y == angmud -> EDmg is floor(1.5*Dmg);EDmg is Dmg);
+    (X == daemon) -> (Y == daemon -> EDmg is Dmg; EDmg is floor(1.5*Dmg));
+    (X == angmud) -> (Y == angmud -> EDmg is Dmg; EDmg is floor(0.5*Dmg)),
+    (X == panitia) -> (Y == angmud -> EDmg is floor(2.0*Dmg),EDmg is Dmg)), 
     hp(Victim, Hp),
-    write(Victim), write(' took '), write(Dmg), write(' damage'), nl,
+    write(Victim), write(' took '), write(EDmg), write(' damage'), nl,
     divider, nl,
-    NewHp is Hp-Dmg,
+    NewHp is Hp-EDmg,
     setHp(Victim, NewHp), 
     checkStatus, !.
 
