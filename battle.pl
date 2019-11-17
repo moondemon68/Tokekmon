@@ -34,7 +34,6 @@ getTokemonByIndex(IsLegend, Index, [H|T], Res) :-
 
 checkTokemon :-
     random(1, 101, Random),
-    write(Random),
     (Random =< 5 -> countTokemon(1, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(1, TRandom, Tokemon), findTokemon(Tokemon);
      Random =< 25 -> countTokemon(0, X), X > 0, X2 is X+1, random(1, X2, TRandom), getTokemonByIndex(0, TRandom, Tokemon), findTokemon(Tokemon))
     , !.
@@ -54,8 +53,8 @@ escape :-
 changeTokemon :-
     resetSkill,
     player(_, _, _, TokemonList),
-    write('Chose another tokemon!'), nl,
-    printList(TokemonList), !.
+    write('Choose another tokemon!'), nl,
+    printList(TokemonList), write('Type \'summon(<tokemon>)\', then'), !.
 
 % Attack
 attack :-
@@ -182,7 +181,8 @@ capture :-
         addTokemon(Tokemon),
         write('You captured '), write(Tokemon), write('!'), nl,
         starthp(Tokemon, StartHP),
-        setHp(Tokemon, StartHP)
+        setHp(Tokemon, StartHP),
+        !
     ), 
     gameFinish, !.
 
