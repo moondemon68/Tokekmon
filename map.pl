@@ -88,9 +88,7 @@ initMap :-
     asserta(mapItem(10, 12, fence)),
     asserta(mapItem(11, 12, fence)),
     asserta(mapItem(12, 12, fence)),
-    asserta(mapItem(8, 2, fence)),
-    asserta(mapItem(8, 3, fence)),
-    asserta(mapItem(8, 4, fence)),
-    asserta(mapItem(9, 3, fence)),
+    randomPosition(X1, Y1),
+    asserta(mapItem(X1, Y1, fence)),
     asserta(mapItem(6, 6, gym)),
     !.

@@ -5,7 +5,7 @@
 :- include('command.pl').
 :- include('messages.pl').
 :- include('map.pl').
-:- include('battle2.pl').
+:- include('battle.pl').
 :- include('tokemon.pl').
 :- include('saveload.pl').
 
