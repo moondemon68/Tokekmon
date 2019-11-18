@@ -239,6 +239,7 @@ battle :-
 
 % find tokemon
 findTokemon(EnemyT) :-
+    setGame(2),
     allTokemon(TokemonList),
     isMember(EnemyT, TokemonList),
     cls,
@@ -247,7 +248,6 @@ findTokemon(EnemyT) :-
     (asserta(tokemonInBattle(EnemyT, enemy));
     retract(tokemonInBattle(EnemyT, enemy)),
     assertz(tokemonInBattle(EnemyT, enemy))),
-    setGame(2),
     write('Type "fight" to begin battle or "escape" to run'), nl,
     divider, !.
     

@@ -23,6 +23,7 @@ tokemon(dapeen).
 tokemon(roohjaab).
 tokemon(jurisutantro).
 tokemon(duade).
+tokemon(fabian).
 attribute(budi,fire).
 attribute(rali, leaf).
 attribute(carimender, fire).
@@ -39,6 +40,7 @@ attribute(dapeen, angmud).
 attribute(roohjaab, panitia).
 attribute(jurisutantro, panitia).
 attribute(duade, panitia).
+attribute(fabian, daemon).
 normalDamage(budi,25).
 normalDamage(rali, 20).
 normalDamage(carimender, 6).
@@ -55,6 +57,7 @@ normalDamage(dapeen, 38).
 normalDamage(roohjaab, 135).
 normalDamage(jurisutantro, 300).
 normalDamage(duade, 1).
+normalDamage(fabian, 12345).
 skillDamage(budi, 3000).
 skillDamage(rali, 50).
 skillDamage(carimender, 52).
@@ -71,6 +74,7 @@ skillDamage(dapeen, 78).
 skillDamage(roohjaab, 182).
 skillDamage(jurisutantro, 600).
 skillDamage(duade, 1050).
+skillDamage(fabian, 54321).
 isLegendary(budi, 0).
 isLegendary(rali, 0).
 isLegendary(harlele, 0).
@@ -88,6 +92,7 @@ isLegendary(dapeen, 0).
 isLegendary(roohjaab, 0).
 isLegendary(jurisutantro, 0).
 isLegendary(duade, 0).
+isLegendary(fabian, 0).
 starthp(budi,1200).
 starthp(rali, 100).
 starthp(carimender, 123).
@@ -104,6 +109,7 @@ starthp(dapeen, 80).
 starthp(roohjaab, 1800).
 starthp(jurisutantro, 1200).
 starthp(duade, 500).
+starthp(fabian, 69420).
 randomPositionTokemon(X, Y) :-
     randomPosition(X, Y),
     \+(position(_, X, Y)).
@@ -129,7 +135,8 @@ initTokemon :-
     asserta(hp(apatis,100)),
     asserta(hp(roohjaab, 1800)),
     asserta(hp(duade, 500)),
-    asserta(hp(dapeen, 80)).
+    asserta(hp(dapeen, 80)),
+    asserta(hp(fabian, 69420)).
 
 % primitif
 setHp(Name, NewHp) :-
