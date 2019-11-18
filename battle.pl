@@ -43,10 +43,9 @@ escape :-
     game(2),
     random(0, 101, Rand),
     (Rand > 70 ->
-        cls,
-        write('Failed to escape!'), nl,
-        hpBar,
-        battle;
+        fight,
+        write('Failed to escape!'), nl;
+    map,
     write('You escaped from battle!'), setGame(1)), nl, !.
 
 % chose tokemon
@@ -171,6 +170,7 @@ winBattle :-
 
 capture :-
     game(5),
+    setGame(1),
     player(_, _, _, TokemonList),
     countList(TokemonList, N),
     (
@@ -179,6 +179,7 @@ capture :-
         setGame(1),
         tokemonInBattle(Tokemon, enemy),
         addTokemon(Tokemon),
+        map,
         write('You captured '), write(Tokemon), write('!'), nl,
         starthp(Tokemon, StartHP),
         setHp(Tokemon, StartHP),
